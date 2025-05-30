@@ -62,6 +62,41 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
+    function showRealImages(images) {
+        // Hide placeholder
+        imagePlaceholder.style.display = 'none';
+        
+        // Clear and show grid
+        imageGrid.innerHTML = '';
+        imageGrid.style.display = 'grid';
+        
+        // Create image containers with real images
+        images.forEach((imageSrc, index) => {
+            const container = document.createElement('div');
+            container.className = 'grid-image-container';
+            
+            const img = document.createElement('img');
+            img.className = 'grid-image';
+            img.alt = `Generated image ${index + 1}`;
+            img.src = imageSrc;
+            img.style.opacity = '0';
+            
+            // Fade in animation
+            img.onload = function() {
+                this.style.transition = 'opacity 0.5s ease-out';
+                this.style.opacity = '1';
+            };
+            
+            // Add click to view full size
+            container.addEventListener('click', function() {
+                window.open(imageSrc, '_blank');
+            });
+            
+            container.appendChild(img);
+            imageGrid.appendChild(container);
+        });
+    }
+
     generateBtn.addEventListener('click', async function() {
         const prompt = promptInput.value.trim();
         const imageCount = parseInt(imageCountSelect.value);
@@ -95,11 +130,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
             const data = await response.json();
             
-            if (data.success) {
-                showImages(imageCount);
+            if (data.success && data.images) {
+                showRealImages(data.images);
                 console.log(data.message);
             } else {
-                alert('Failed to generate images. Please try again.');
+                alert(data.error || 'Failed to generate images. Please try again.');
             }
         } catch (error) {
             console.error('Error:', error);
