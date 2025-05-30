@@ -4,9 +4,26 @@ document.addEventListener('DOMContentLoaded', function() {
     const generateBtn = document.getElementById('generateBtn');
     const btnText = document.querySelector('.btn-text');
     const loadingSpinner = document.querySelector('.loading-spinner');
+    const loadingText = document.querySelector('.loading-text');
     const imagePlaceholder = document.getElementById('imagePlaceholder');
     const generatedImage = document.getElementById('generatedImage');
     const placeholderContent = document.querySelector('.placeholder-content');
+    const suggestionTags = document.querySelectorAll('.suggestion-tag');
+
+    // Handle suggestion tag clicks
+    suggestionTags.forEach(tag => {
+        tag.addEventListener('click', function() {
+            const prompt = this.getAttribute('data-prompt');
+            promptInput.value = prompt;
+            promptInput.focus();
+            
+            // Add a little animation feedback
+            this.style.transform = 'scale(0.95)';
+            setTimeout(() => {
+                this.style.transform = '';
+            }, 150);
+        });
+    });
 
     generateBtn.addEventListener('click', async function() {
         const prompt = promptInput.value.trim();
@@ -20,6 +37,7 @@ document.addEventListener('DOMContentLoaded', function() {
         generateBtn.disabled = true;
         btnText.style.display = 'none';
         loadingSpinner.style.display = 'block';
+        loadingText.style.display = 'block';
         
         try {
             const response = await fetch('/generate', {
@@ -37,10 +55,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 placeholderContent.style.display = 'none';
                 
                 // Show generated image (placeholder for now)
-                generatedImage.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgdmlld0JveD0iMCAwIDUxMiA1MTIiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI1MTIiIGhlaWdodD0iNTEyIiBmaWxsPSIjZjBmMGYwIi8+Cjx0ZXh0IHg9IjI1NiIgeT0iMjQwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTgiIGZpbGw9IiM2NjY2NjYiPkdlbmVyYXRlZCBJbWFnZTwvdGV4dD4KPHRZCST0iMjU2IiB5PSIyNzAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCIgZmlsbD0iIzk5OTk5OSI+UHJvbXB0OiAke3Byb21wdC5zdWJzdHJpbmcoMCwgMzApfS4uLjwvdGV4dD4KPC9zdmc+';
+                generatedImage.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgdmlld0JveD0iMCAwIDUxMiA1MTIiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI1MTIiIGhlaWdodD0iNTEyIiBmaWxsPSIjMWExYTFhIi8+Cjx0ZXh0IHg9IjI1NiIgeT0iMjQwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iSW50ZXIiIGZvbnQtc2l6ZT0iMTgiIGZpbGw9IiNmZjE0OTMiIGZvbnQtd2VpZ2h0PSI2MDAiPkdlbmVyYXRlZCBJbWFnZTwvdGV4dD4KPHRZCSD0IjI1NiIgeT0iMjcwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iSW50ZXIiIGZvbnQtc2l6ZT0iMTQiIGZpbGw9IiM5OTk5OTkiPlByb21wdDogJHtwcm9tcHQuc3Vic3RyaW5nKDAsIDMwKX0uLi48L3RleHQ+CjxyZWN0IHg9IjEwNiIgeT0iMzAwIiB3aWR0aD0iMzAwIiBoZWlnaHQ9IjgwIiByeD0iMTAiIGZpbGw9IiMyYTJhMmEiLz4KPHRZCSD0IjI1NiIgeT0iMzMwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iSW50ZXIiIGZvbnQtc2l6ZT0iMTIiIGZpbGw9IiNjY2NjY2MiPlByZXZpZXcgLSBSZWFsIGltYWdlIHdvdWxkPC90ZXh0Pgo8dGVYdCB4PSIyNTYiIHk9IjM1MCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IkludGVyIiBmb250LXNpemU9IjEyIiBmaWxsPSIjY2NjY2NjIj5hcHBlYXIgaGVyZSB3aXRoIEFJPC90ZXh0Pgo8dGVYdCB4PSIyNTYiIHk9IjM3MCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IkludGVyIiBmb250LXNpemU9IjEyIiBmaWxsPSIjY2NjY2NjIj5pbWFnZSBnZW5lcmF0aW9uPC90ZXh0Pgo8L3N2Zz4=';
                 generatedImage.style.display = 'block';
-                imagePlaceholder.style.border = 'none';
-                imagePlaceholder.style.background = 'transparent';
                 
                 console.log(data.message);
             } else {
@@ -54,6 +70,7 @@ document.addEventListener('DOMContentLoaded', function() {
             generateBtn.disabled = false;
             btnText.style.display = 'block';
             loadingSpinner.style.display = 'none';
+            loadingText.style.display = 'none';
         }
     });
 
@@ -62,5 +79,11 @@ document.addEventListener('DOMContentLoaded', function() {
         if (e.key === 'Enter' && e.ctrlKey) {
             generateBtn.click();
         }
+    });
+
+    // Auto-resize textarea
+    promptInput.addEventListener('input', function() {
+        this.style.height = 'auto';
+        this.style.height = Math.max(120, this.scrollHeight) + 'px';
     });
 });
