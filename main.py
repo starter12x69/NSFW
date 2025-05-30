@@ -10,12 +10,13 @@ def index():
 @app.route('/generate', methods=['POST'])
 def generate_image():
     prompt = request.json.get('prompt', '')
+    count = request.json.get('count', 1)
     # Placeholder for image generation logic
     # In a real implementation, you would integrate with an AI image generation API
     return jsonify({
         'success': True,
-        'image_url': '/static/placeholder.jpg',  # Placeholder image
-        'message': f'Image generated for prompt: "{prompt}"'
+        'images': ['/static/placeholder.jpg'] * count,  # Placeholder images
+        'message': f'{count} image{"s" if count > 1 else ""} generated for prompt: "{prompt}"'
     })
 
 if __name__ == '__main__':

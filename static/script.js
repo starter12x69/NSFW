@@ -1,12 +1,13 @@
 
 document.addEventListener('DOMContentLoaded', function() {
     const promptInput = document.getElementById('promptInput');
+    const imageCountSelect = document.getElementById('imageCount');
     const generateBtn = document.getElementById('generateBtn');
     const btnText = document.querySelector('.btn-text');
     const loadingSpinner = document.querySelector('.loading-spinner');
     const loadingText = document.querySelector('.loading-text');
     const imagePlaceholder = document.getElementById('imagePlaceholder');
-    const generatedImage = document.getElementById('generatedImage');
+    const imageGrid = document.getElementById('imageGrid');
     const placeholderContent = document.querySelector('.placeholder-content');
     const suggestionTags = document.querySelectorAll('.suggestion-tag');
 
@@ -25,8 +26,45 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
+    function createImagePlaceholder(imageNumber) {
+        return `data:image/svg+xml;base64,${btoa(`
+            <svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect width="512" height="512" fill="#1a1a1a"/>
+                <text x="256" y="240" text-anchor="middle" font-family="Inter" font-size="18" fill="#ff1493" font-weight="600">Generated Image ${imageNumber}</text>
+                <text x="256" y="270" text-anchor="middle" font-family="Inter" font-size="14" fill="#999999">Preview - Real image would</text>
+                <rect x="106" y="300" width="300" height="80" rx="10" fill="#2a2a2a"/>
+                <text x="256" y="330" text-anchor="middle" font-family="Inter" font-size="12" fill="#cccccc">appear here with AI</text>
+                <text x="256" y="350" text-anchor="middle" font-family="Inter" font-size="12" fill="#cccccc">image generation</text>
+            </svg>
+        `)}`;
+    }
+
+    function showImages(imageCount) {
+        // Hide placeholder
+        imagePlaceholder.style.display = 'none';
+        
+        // Clear and show grid
+        imageGrid.innerHTML = '';
+        imageGrid.style.display = 'grid';
+        
+        // Create image containers
+        for (let i = 1; i <= imageCount; i++) {
+            const container = document.createElement('div');
+            container.className = 'grid-image-container';
+            
+            const img = document.createElement('img');
+            img.className = 'grid-image';
+            img.alt = `Generated image ${i}`;
+            img.src = createImagePlaceholder(i);
+            
+            container.appendChild(img);
+            imageGrid.appendChild(container);
+        }
+    }
+
     generateBtn.addEventListener('click', async function() {
         const prompt = promptInput.value.trim();
+        const imageCount = parseInt(imageCountSelect.value);
         
         if (!prompt) {
             alert('Please enter a description for your image.');
@@ -39,28 +77,29 @@ document.addEventListener('DOMContentLoaded', function() {
         loadingSpinner.style.display = 'block';
         loadingText.style.display = 'block';
         
+        // Update loading text based on image count
+        const loadingTextElement = document.querySelector('.loading-text');
+        loadingTextElement.textContent = imageCount === 1 ? 'Generating image...' : `Generating ${imageCount} images...`;
+        
         try {
             const response = await fetch('/generate', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ prompt: prompt })
+                body: JSON.stringify({ 
+                    prompt: prompt,
+                    count: imageCount
+                })
             });
 
             const data = await response.json();
             
             if (data.success) {
-                // Hide placeholder content
-                placeholderContent.style.display = 'none';
-                
-                // Show generated image (placeholder for now)
-                generatedImage.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgdmlld0JveD0iMCAwIDUxMiA1MTIiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI1MTIiIGhlaWdodD0iNTEyIiBmaWxsPSIjMWExYTFhIi8+Cjx0ZXh0IHg9IjI1NiIgeT0iMjQwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iSW50ZXIiIGZvbnQtc2l6ZT0iMTgiIGZpbGw9IiNmZjE0OTMiIGZvbnQtd2VpZ2h0PSI2MDAiPkdlbmVyYXRlZCBJbWFnZTwvdGV4dD4KPHRZCSD0IjI1NiIgeT0iMjcwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iSW50ZXIiIGZvbnQtc2l6ZT0iMTQiIGZpbGw9IiM5OTk5OTkiPlByb21wdDogJHtwcm9tcHQuc3Vic3RyaW5nKDAsIDMwKX0uLi48L3RleHQ+CjxyZWN0IHg9IjEwNiIgeT0iMzAwIiB3aWR0aD0iMzAwIiBoZWlnaHQ9IjgwIiByeD0iMTAiIGZpbGw9IiMyYTJhMmEiLz4KPHRZCSD0IjI1NiIgeT0iMzMwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iSW50ZXIiIGZvbnQtc2l6ZT0iMTIiIGZpbGw9IiNjY2NjY2MiPlByZXZpZXcgLSBSZWFsIGltYWdlIHdvdWxkPC90ZXh0Pgo8dGVYdCB4PSIyNTYiIHk9IjM1MCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IkludGVyIiBmb250LXNpemU9IjEyIiBmaWxsPSIjY2NjY2NjIj5hcHBlYXIgaGVyZSB3aXRoIEFJPC90ZXh0Pgo8dGVYdCB4PSIyNTYiIHk9IjM3MCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IkludGVyIiBmb250LXNpemU9IjEyIiBmaWxsPSIjY2NjY2NjIj5pbWFnZSBnZW5lcmF0aW9uPC90ZXh0Pgo8L3N2Zz4=';
-                generatedImage.style.display = 'block';
-                
+                showImages(imageCount);
                 console.log(data.message);
             } else {
-                alert('Failed to generate image. Please try again.');
+                alert('Failed to generate images. Please try again.');
             }
         } catch (error) {
             console.error('Error:', error);

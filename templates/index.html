@@ -36,6 +36,17 @@
                         <span class="suggestion-tag" data-prompt="sensual boudoir">sensual boudoir</span>
                     </div>
                     
+                    <div class="image-count-section">
+                        <label for="imageCount" class="image-count-label">Generate how many images?</label>
+                        <select id="imageCount" class="image-count-dropdown">
+                            <option value="1">1 image</option>
+                            <option value="2">2 images</option>
+                            <option value="3">3 images</option>
+                            <option value="4">4 images</option>
+                            <option value="5">5 images</option>
+                        </select>
+                    </div>
+                    
                     <button id="generateBtn" class="generate-btn">
                         <span class="btn-text">Generate</span>
                         <div class="loading-spinner" style="display: none;"></div>
@@ -51,10 +62,11 @@
                                 <circle cx="8.5" cy="8.5" r="1.5"/>
                                 <polyline points="21,15 16,10 5,21"/>
                             </svg>
-                            <p>Your generated image will appear here</p>
+                            <p>Your generated images will appear here</p>
                         </div>
-                        <img id="generatedImage" class="generated-image" style="display: none;" alt="Generated image">
                     </div>
+                    
+                    <div id="imageGrid" class="image-grid" style="display: none;"></div>
                 </div>
             </div>
         </main>
