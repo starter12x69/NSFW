@@ -1,0 +1,56 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Image Generator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1 class="headline">Generate Custom NSFW Images with AI</h1>
+            <p class="subtitle">Create unique, personalized images using advanced AI technology</p>
+        </header>
+
+        <main class="main-content">
+            <div class="generator-section">
+                <div class="input-section">
+                    <textarea 
+                        id="promptInput" 
+                        class="prompt-input" 
+                        placeholder="Describe the image you want to generate..."
+                        rows="4"
+                    ></textarea>
+                    
+                    <button id="generateBtn" class="generate-btn">
+                        <span class="btn-text">Generate</span>
+                        <div class="loading-spinner" style="display: none;"></div>
+                    </button>
+                </div>
+
+                <div class="image-section">
+                    <div id="imagePlaceholder" class="image-placeholder">
+                        <div class="placeholder-content">
+                            <svg class="placeholder-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                                <circle cx="8.5" cy="8.5" r="1.5"/>
+                                <polyline points="21,15 16,10 5,21"/>
+                            </svg>
+                            <p>Your generated image will appear here</p>
+                        </div>
+                        <img id="generatedImage" class="generated-image" style="display: none;" alt="Generated image">
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <p class="disclaimer">⚠️ This service generates adult content. Users must be 18+ to use this service.</p>
+        </footer>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
