@@ -1,6 +1,7 @@
 
 document.addEventListener('DOMContentLoaded', function() {
     const promptInput = document.getElementById('promptInput');
+    const styleSelect = document.getElementById('styleSelect');
     const imageCountSelect = document.getElementById('imageCount');
     const generateBtn = document.getElementById('generateBtn');
     const btnText = document.querySelector('.btn-text');
@@ -10,6 +11,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const imageGrid = document.getElementById('imageGrid');
     const placeholderContent = document.querySelector('.placeholder-content');
     const suggestionTags = document.querySelectorAll('.suggestion-tag');
+    const tagCheckboxes = document.querySelectorAll('input[name="tags"]');
 
     // Handle suggestion tag clicks
     suggestionTags.forEach(tag => {
@@ -25,6 +27,41 @@ document.addEventListener('DOMContentLoaded', function() {
             }, 150);
         });
     });
+
+    // Get selected tags
+    function getSelectedTags() {
+        const selectedTags = [];
+        tagCheckboxes.forEach(checkbox => {
+            if (checkbox.checked) {
+                selectedTags.push(checkbox.value);
+            }
+        });
+        return selectedTags;
+    }
+
+    // Validate form inputs
+    function validateForm() {
+        const prompt = promptInput.value.trim();
+        const style = styleSelect.value;
+        const count = parseInt(imageCountSelect.value);
+
+        if (!prompt) {
+            alert('Please enter a description for your image.');
+            return false;
+        }
+
+        if (!style) {
+            alert('Please select a style.');
+            return false;
+        }
+
+        if (!count || count < 1 || count > 5) {
+            alert('Please select a valid image count (1-5).');
+            return false;
+        }
+
+        return true;
+    }
 
     function createImagePlaceholder(imageNumber) {
         return `data:image/svg+xml;base64,${btoa(`
@@ -98,13 +135,17 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     generateBtn.addEventListener('click', async function() {
-        const prompt = promptInput.value.trim();
-        const imageCount = parseInt(imageCountSelect.value);
-        
-        if (!prompt) {
-            alert('Please enter a description for your image.');
+        // Validate form before proceeding
+        if (!validateForm()) {
             return;
         }
+
+        const prompt = promptInput.value.trim();
+        const style = styleSelect.value;
+        const tags = getSelectedTags();
+        const imageCount = parseInt(imageCountSelect.value);
+        
+        console.log('Form data:', { prompt, style, tags, count: imageCount });
 
         // Show loading state
         generateBtn.disabled = true;
@@ -124,6 +165,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 },
                 body: JSON.stringify({ 
                     prompt: prompt,
+                    style: style,
+                    tags: tags,
                     count: imageCount
                 })
             });
@@ -159,5 +202,17 @@ document.addEventListener('DOMContentLoaded', function() {
     promptInput.addEventListener('input', function() {
         this.style.height = 'auto';
         this.style.height = Math.max(120, this.scrollHeight) + 'px';
+    });
+
+    // Add visual feedback for tag selection
+    tagCheckboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', function() {
+            const label = this.closest('.tag-checkbox');
+            if (this.checked) {
+                label.classList.add('selected');
+            } else {
+                label.classList.remove('selected');
+            }
+        });
     });
 });
