@@ -17,7 +17,7 @@ app = Flask(__name__)
 CORS(app)  # Enable CORS for all routes
 
 # Configuration
-RUNPOD_API_BASE_URL = os.getenv('RUNPOD_API_URL', 'http://123.456.78.9:3000')
+RUNPOD_API_BASE_URL = os.getenv('RUNPOD_API_URL', 'https://znnuxdddev7i0c-3000.proxy.runpod.net')
 API_TIMEOUT = 300  # 5 minutes timeout for image generation
 
 @app.route('/')
