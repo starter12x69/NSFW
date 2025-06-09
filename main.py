@@ -43,6 +43,7 @@ def generate_image():
         "error": "error details if any"
     }
     """
+    print("⚡ /generate endpoint hit")
     try:
         # Validate request
         if not request.is_json:
@@ -53,6 +54,7 @@ def generate_image():
         
         data = request.get_json()
         prompt = data.get('prompt', '').strip()
+        print("Prompt received:", prompt)
         count = data.get('count', 1)
         
         # Validate inputs
