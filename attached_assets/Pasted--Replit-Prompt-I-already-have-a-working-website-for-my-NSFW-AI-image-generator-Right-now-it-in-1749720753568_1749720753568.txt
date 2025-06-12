@@ -1,0 +1,43 @@
+🛠️ Replit Prompt:
+
+I already have a working website for my NSFW AI image generator. Right now it includes a headline, a short description, a prompt input, and a “Generate” button — but the generation is not yet live.
+
+Please rebuild the website to reflect a pre-launch landing page with the goal of collecting early access signups and building trust.
+
+Here’s what I need:
+
+⸻
+
+✅ 1. Hero Section (Top of Page)
+	•	Headline: “NSFW AI Image Generator. Hyper-Realistic. Ultra-Customizable.”
+	•	Subheadline: “Generate private, powerful adult content with full control over styles and details. Launching soon — early access available.”
+	•	Replace the “Generate” button with a new button labeled: “Get Early Access”
+	•	When clicked, this button opens a modal with this message:
+“We’re finalizing the backend. Be the first to try it and unlock special launch credits.”
+Include an email input field and a “Notify Me” button.
+
+⸻
+
+✅ 2. Image Gallery Section
+	•	Create a responsive grid layout that displays sample images (placeholders for now).
+	•	Above each image, include a sample tag like: Cyberpunk Girl, Blowjob, Goth GF, Realistic, etc.
+	•	Add a short text above the gallery: “See what’s possible”
+
+⸻
+
+✅ 3. FAQ Section
+	•	Add an FAQ section at the bottom with these questions and answers:
+	•	Is this anonymous? Yes. We don’t log prompts or store your generations.
+	•	When will it launch? We’re currently testing and improving — join early access for updates.
+	•	Will my images be private? Yes. Everything is generated on isolated infrastructure.
+	•	Can I generate hardcore content? Yes — this tool is built for full freedom.
+	•	Will I need to pay? Yes, but early users get bonus credits at launch.
+
+⸻
+
+✅ Other notes:
+	•	Make sure the existing prompt input, generation logic, or buttons are hidden or removed for now — users shouldn’t be able to generate images yet.
+	•	Keep the styling clean and responsive — use modern fonts and layout.
+	•	Focus everything around building anticipation and capturing emails.
+
+Thank you!
