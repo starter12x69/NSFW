@@ -153,6 +153,67 @@ body {
     stroke-width: 1.5;
 }
 
+/* ===== HOW IT WORKS SECTION ===== */
+.how-it-works-section {
+    margin-bottom: 4rem;
+}
+
+.how-it-works-title {
+    text-align: center;
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: #ffffff;
+    margin-bottom: 3rem;
+}
+
+.steps-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.step-item {
+    background: linear-gradient(145deg, #1a1a1a 0%, #171717 100%);
+    border-radius: 16px;
+    padding: 2rem;
+    text-align: center;
+    border: 1px solid #333333;
+    transition: all 0.3s ease;
+}
+
+.step-item:hover {
+    border-color: #ff1493;
+    box-shadow: 0 8px 25px rgba(255, 20, 147, 0.1);
+}
+
+.step-number {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, #ff1493 0%, #e6127a 100%);
+    color: #ffffff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    font-weight: 800;
+    margin: 0 auto 1.5rem auto;
+}
+
+.step-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 1rem;
+}
+
+.step-description {
+    color: #cccccc;
+    line-height: 1.5;
+}
+
 /* ===== FAQ SECTION ===== */
 .faq-section {
     margin-bottom: 4rem;
