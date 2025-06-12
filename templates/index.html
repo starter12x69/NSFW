@@ -13,11 +13,125 @@
     </nav>
 
     <div class="container">
-        <header class="header">
-            <h1 class="headline">NSFW AI Image Generator</h1>
-            <p class="subtitle">Create spicy images and let your fantasies come true</p>
+        <!-- Hero Section -->
+        <header class="hero-section">
+            <h1 class="hero-headline">NSFW AI Image Generator. Hyper-Realistic. Ultra-Customizable.</h1>
+            <p class="hero-subheadline">Generate private, powerful adult content with full control over styles and details. Launching soon — early access available.</p>
+            <button id="earlyAccessBtn" class="early-access-btn">Get Early Access</button>
         </header>
 
+        <!-- Image Gallery Section -->
+        <section class="gallery-section">
+            <h2 class="gallery-title">See what's possible</h2>
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <div class="gallery-tag">Cyberpunk Girl</div>
+                    <div class="gallery-placeholder">
+                        <svg class="gallery-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                            <circle cx="8.5" cy="8.5" r="1.5"/>
+                            <polyline points="21,15 16,10 5,21"/>
+                        </svg>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <div class="gallery-tag">Blowjob</div>
+                    <div class="gallery-placeholder">
+                        <svg class="gallery-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                            <circle cx="8.5" cy="8.5" r="1.5"/>
+                            <polyline points="21,15 16,10 5,21"/>
+                        </svg>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <div class="gallery-tag">Goth GF</div>
+                    <div class="gallery-placeholder">
+                        <svg class="gallery-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                            <circle cx="8.5" cy="8.5" r="1.5"/>
+                            <polyline points="21,15 16,10 5,21"/>
+                        </svg>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <div class="gallery-tag">Realistic</div>
+                    <div class="gallery-placeholder">
+                        <svg class="gallery-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                            <circle cx="8.5" cy="8.5" r="1.5"/>
+                            <polyline points="21,15 16,10 5,21"/>
+                        </svg>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <div class="gallery-tag">Anime Style</div>
+                    <div class="gallery-placeholder">
+                        <svg class="gallery-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                            <circle cx="8.5" cy="8.5" r="1.5"/>
+                            <polyline points="21,15 16,10 5,21"/>
+                        </svg>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <div class="gallery-tag">Fantasy Art</div>
+                    <div class="gallery-placeholder">
+                        <svg class="gallery-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                            <circle cx="8.5" cy="8.5" r="1.5"/>
+                            <polyline points="21,15 16,10 5,21"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section class="faq-section">
+            <h2 class="faq-title">Frequently Asked Questions</h2>
+            <div class="faq-container">
+                <div class="faq-item">
+                    <h3 class="faq-question">Is this anonymous?</h3>
+                    <p class="faq-answer">Yes. We don't log prompts or store your generations.</p>
+                </div>
+                <div class="faq-item">
+                    <h3 class="faq-question">When will it launch?</h3>
+                    <p class="faq-answer">We're currently testing and improving — join early access for updates.</p>
+                </div>
+                <div class="faq-item">
+                    <h3 class="faq-question">Will my images be private?</h3>
+                    <p class="faq-answer">Yes. Everything is generated on isolated infrastructure.</p>
+                </div>
+                <div class="faq-item">
+                    <h3 class="faq-question">Can I generate hardcore content?</h3>
+                    <p class="faq-answer">Yes — this tool is built for full freedom.</p>
+                </div>
+                <div class="faq-item">
+                    <h3 class="faq-question">Will I need to pay?</h3>
+                    <p class="faq-answer">Yes, but early users get bonus credits at launch.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Early Access Modal -->
+        <div id="earlyAccessModal" class="modal" style="display: none;">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h3 class="modal-title">Get Early Access</h3>
+                <p class="modal-description">We're finalizing the backend. Be the first to try it and unlock special launch credits.</p>
+                <form id="earlyAccessForm" class="early-access-form">
+                    <input type="email" id="emailInput" placeholder="Enter your email" required class="email-input">
+                    <button type="submit" class="notify-btn">Notify Me</button>
+                </form>
+                <div id="successMessage" class="success-message" style="display: none;">
+                    <p>✅ Thanks! We'll notify you when we launch.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- COMMENTED OUT: Original generator section for future re-enablement -->
+        <!--
         <main class="main-content">
             <div class="generator-section">
                 <div class="input-section">
@@ -147,6 +261,7 @@
                 </div>
             </div>
         </main>
+        -->
 
         <footer class="footer">
             <div class="security-badges">

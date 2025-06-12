@@ -1,5 +1,75 @@
 
 document.addEventListener('DOMContentLoaded', function() {
+    // Early Access Modal Elements
+    const earlyAccessBtn = document.getElementById('earlyAccessBtn');
+    const earlyAccessModal = document.getElementById('earlyAccessModal');
+    const closeModal = document.querySelector('.close');
+    const earlyAccessForm = document.getElementById('earlyAccessForm');
+    const emailInput = document.getElementById('emailInput');
+    const successMessage = document.getElementById('successMessage');
+
+    // Early Access Modal Functionality
+    earlyAccessBtn.addEventListener('click', function() {
+        earlyAccessModal.style.display = 'flex';
+        emailInput.focus();
+    });
+
+    closeModal.addEventListener('click', function() {
+        earlyAccessModal.style.display = 'none';
+        resetModal();
+    });
+
+    window.addEventListener('click', function(event) {
+        if (event.target === earlyAccessModal) {
+            earlyAccessModal.style.display = 'none';
+            resetModal();
+        }
+    });
+
+    function resetModal() {
+        earlyAccessForm.style.display = 'block';
+        successMessage.style.display = 'none';
+        emailInput.value = '';
+    }
+
+    earlyAccessForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const email = emailInput.value.trim();
+        if (!email || !isValidEmail(email)) {
+            alert('Please enter a valid email address.');
+            return;
+        }
+
+        // Simulate signup success
+        earlyAccessForm.style.display = 'none';
+        successMessage.style.display = 'block';
+        
+        // Store email locally for now (you can replace this with actual API call)
+        localStorage.setItem('earlyAccessEmail', email);
+        console.log('Early access signup:', email);
+        
+        // Auto-close modal after 3 seconds
+        setTimeout(() => {
+            earlyAccessModal.style.display = 'none';
+            resetModal();
+        }, 3000);
+    });
+
+    function isValidEmail(email) {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+    }
+
+    // Allow Enter key to submit early access form
+    emailInput.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') {
+            earlyAccessForm.dispatchEvent(new Event('submit'));
+        }
+    });
+
+    /* COMMENTED OUT: Original generation functionality - preserved for future re-enablement
+    
     const promptInput = document.getElementById('promptInput');
     const styleSelect = document.getElementById('styleSelect');
     const imageCountSelect = document.getElementById('imageCount');
@@ -215,4 +285,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
+    
+    */
 });
