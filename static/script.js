@@ -68,6 +68,25 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
+    // FAQ Functionality
+    const faqItems = document.querySelectorAll('.faq-item');
+    
+    faqItems.forEach(item => {
+        item.addEventListener('click', function() {
+            const isActive = this.classList.contains('active');
+            
+            // Close all other FAQ items
+            faqItems.forEach(otherItem => {
+                otherItem.classList.remove('active');
+            });
+            
+            // Toggle current item
+            if (!isActive) {
+                this.classList.add('active');
+            }
+        });
+    });
+
     /* COMMENTED OUT: Original generation functionality - preserved for future re-enablement
     
     const promptInput = document.getElementById('promptInput');
