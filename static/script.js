@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', function() {
         emailInput.value = '';
     }
 
-    earlyAccessForm.addEventListener('submit', function(e) {
+    earlyAccessForm.addEventListener('submit', async function(e) {
         e.preventDefault();
         
         const email = emailInput.value.trim();
@@ -41,19 +41,48 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
 
-        // Simulate signup success
-        earlyAccessForm.style.display = 'none';
-        successMessage.style.display = 'block';
-        
-        // Store email locally for now (you can replace this with actual API call)
-        localStorage.setItem('earlyAccessEmail', email);
-        console.log('Early access signup:', email);
-        
-        // Auto-close modal after 3 seconds
-        setTimeout(() => {
-            earlyAccessModal.style.display = 'none';
-            resetModal();
-        }, 3000);
+        // Disable form during submission
+        const submitBtn = earlyAccessForm.querySelector('.notify-btn');
+        const originalText = submitBtn.textContent;
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Submitting...';
+
+        try {
+            const response = await fetch('/early-access', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ email: email })
+            });
+
+            const data = await response.json();
+            
+            if (data.success) {
+                // Update success message with server response
+                const successText = successMessage.querySelector('p');
+                successText.textContent = `✅ ${data.message}`;
+                
+                // Show success message
+                earlyAccessForm.style.display = 'none';
+                successMessage.style.display = 'block';
+                
+                // Auto-close modal after 3 seconds
+                setTimeout(() => {
+                    earlyAccessModal.style.display = 'none';
+                    resetModal();
+                }, 3000);
+            } else {
+                alert(data.message || 'An error occurred. Please try again.');
+            }
+        } catch (error) {
+            console.error('Error submitting email:', error);
+            alert('Network error. Please check your connection and try again.');
+        } finally {
+            // Re-enable form
+            submitBtn.disabled = false;
+            submitBtn.textContent = originalText;
+        }
     });
 
     function isValidEmail(email) {

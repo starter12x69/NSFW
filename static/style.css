@@ -385,6 +385,13 @@ body {
     transform: translateY(-1px);
 }
 
+.notify-btn:disabled {
+    background: #666666;
+    cursor: not-allowed;
+    transform: none;
+    opacity: 0.6;
+}
+
 .success-message {
     text-align: center;
     color: #4ade80;

@@ -169,6 +169,92 @@ def generate_image():
             'error': 'An unexpected error occurred. Please try again.'
         }), 500
 
+@app.route('/early-access', methods=['POST'])
+def early_access():
+    """
+    Handle early access email submissions
+    
+    Expected JSON payload:
+    {
+        "email": "user@example.com"
+    }
+    
+    Returns:
+    {
+        "success": true/false,
+        "message": "status message"
+    }
+    """
+    try:
+        # Validate request
+        if not request.is_json:
+            return jsonify({
+                'success': False,
+                'message': 'Content-Type must be application/json'
+            }), 400
+        
+        data = request.get_json()
+        email = data.get('email', '').strip().lower()
+        
+        # Validate email
+        if not email:
+            return jsonify({
+                'success': False,
+                'message': 'Email is required'
+            }), 400
+        
+        # Basic email validation
+        import re
+        email_pattern = r'^[^\s@]+@[^\s@]+\.[^\s@]+$'
+        if not re.match(email_pattern, email):
+            return jsonify({
+                'success': False,
+                'message': 'Please enter a valid email address'
+            }), 400
+        
+        # Check if email already exists
+        emails_file = 'emails.txt'
+        existing_emails = set()
+        
+        if os.path.exists(emails_file):
+            try:
+                with open(emails_file, 'r') as f:
+                    existing_emails = set(line.strip().lower() for line in f if line.strip())
+            except Exception as e:
+                logger.error(f"Error reading emails file: {str(e)}")
+        
+        if email in existing_emails:
+            return jsonify({
+                'success': True,
+                'message': 'You\'re already on the list! We\'ll notify you when we launch.'
+            })
+        
+        # Save email to file
+        try:
+            with open(emails_file, 'a') as f:
+                f.write(f"{email}\n")
+            
+            logger.info(f"New early access signup: {email}")
+            
+            return jsonify({
+                'success': True,
+                'message': 'Thanks! We\'ll notify you when we launch.'
+            })
+            
+        except Exception as e:
+            logger.error(f"Error saving email: {str(e)}")
+            return jsonify({
+                'success': False,
+                'message': 'An error occurred. Please try again.'
+            }), 500
+            
+    except Exception as e:
+        logger.error(f"Unexpected error in early_access: {str(e)}")
+        return jsonify({
+            'success': False,
+            'message': 'An unexpected error occurred. Please try again.'
+        }), 500
+
 @app.route('/health', methods=['GET'])
 def health_check():
     """Health check endpoint"""
