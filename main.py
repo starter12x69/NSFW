@@ -24,6 +24,12 @@ API_TIMEOUT = 300  # 5 minutes timeout for image generation
 def index():
     return render_template('index.html')
 
+@app.route('/static/<path:filename>')
+def static_files(filename):
+    """Serve static files explicitly"""
+    from flask import send_from_directory
+    return send_from_directory(app.static_folder, filename)
+
 @app.route('/generate', methods=['POST'])
 def generate_image():
     """
@@ -277,4 +283,5 @@ def internal_error(error):
     return jsonify({'error': 'Internal server error'}), 500
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000, debug=False)
+    port = int(os.getenv('PORT', 3000))
+    app.run(host='0.0.0.0', port=port, debug=False)

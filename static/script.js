@@ -1,38 +1,72 @@
 
+// Lightbox functionality
+function openLightbox(imageSrc, imageAlt) {
+    const modal = document.getElementById('lightboxModal');
+    const lightboxImage = document.getElementById('lightboxImage');
+    const lightboxCaption = document.getElementById('lightboxCaption');
+    
+    lightboxImage.src = imageSrc;
+    lightboxImage.alt = imageAlt;
+    lightboxCaption.textContent = imageAlt;
+    
+    modal.style.display = 'block';
+    document.body.style.overflow = 'hidden'; // Prevent scrolling
+}
+
+function closeLightbox() {
+    const modal = document.getElementById('lightboxModal');
+    modal.style.display = 'none';
+    document.body.style.overflow = 'auto'; // Restore scrolling
+}
+
+// Close lightbox with Escape key
+document.addEventListener('keydown', function(event) {
+    if (event.key === 'Escape') {
+        closeLightbox();
+    }
+});
+
 document.addEventListener('DOMContentLoaded', function() {
-    // Early Access Modal Elements
-    const earlyAccessBtn = document.getElementById('earlyAccessBtn');
-    const earlyAccessModal = document.getElementById('earlyAccessModal');
+    // Buy Credits Modal Elements
+    const buyCreditsBtn = document.getElementById('buyCreditsBtn');
+    const subtleCTABtn = document.getElementById('subtleCTABtn');
+    const buyCreditsModal = document.getElementById('buyCreditsModal');
     const closeModal = document.querySelector('.close');
-    const earlyAccessForm = document.getElementById('earlyAccessForm');
+    const creditsForm = document.getElementById('creditsForm');
     const emailInput = document.getElementById('emailInput');
     const successMessage = document.getElementById('successMessage');
 
-    // Early Access Modal Functionality
-    earlyAccessBtn.addEventListener('click', function() {
-        earlyAccessModal.style.display = 'flex';
+    // Buy Credits Modal Functionality
+    buyCreditsBtn.addEventListener('click', function() {
+        buyCreditsModal.style.display = 'flex';
+        emailInput.focus();
+    });
+
+    // Subtle CTA Button - same functionality as main CTA
+    subtleCTABtn.addEventListener('click', function() {
+        buyCreditsModal.style.display = 'flex';
         emailInput.focus();
     });
 
     closeModal.addEventListener('click', function() {
-        earlyAccessModal.style.display = 'none';
+        buyCreditsModal.style.display = 'none';
         resetModal();
     });
 
     window.addEventListener('click', function(event) {
-        if (event.target === earlyAccessModal) {
-            earlyAccessModal.style.display = 'none';
+        if (event.target === buyCreditsModal) {
+            buyCreditsModal.style.display = 'none';
             resetModal();
         }
     });
 
     function resetModal() {
-        earlyAccessForm.style.display = 'block';
+        creditsForm.style.display = 'block';
         successMessage.style.display = 'none';
         emailInput.value = '';
     }
 
-    earlyAccessForm.addEventListener('submit', async function(e) {
+    creditsForm.addEventListener('submit', async function(e) {
         e.preventDefault();
         
         const email = emailInput.value.trim();
@@ -42,7 +76,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         // Disable form during submission
-        const submitBtn = earlyAccessForm.querySelector('.notify-btn');
+        const submitBtn = creditsForm.querySelector('.notify-btn');
         const originalText = submitBtn.textContent;
         submitBtn.disabled = true;
         submitBtn.textContent = 'Submitting...';
@@ -64,12 +98,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 successText.textContent = `✅ ${data.message}`;
                 
                 // Show success message
-                earlyAccessForm.style.display = 'none';
+                creditsForm.style.display = 'none';
                 successMessage.style.display = 'block';
                 
                 // Auto-close modal after 3 seconds
                 setTimeout(() => {
-                    earlyAccessModal.style.display = 'none';
+                    buyCreditsModal.style.display = 'none';
                     resetModal();
                 }, 3000);
             } else {
@@ -90,10 +124,10 @@ document.addEventListener('DOMContentLoaded', function() {
         return emailRegex.test(email);
     }
 
-    // Allow Enter key to submit early access form
+    // Allow Enter key to submit credits form
     emailInput.addEventListener('keydown', function(e) {
         if (e.key === 'Enter') {
-            earlyAccessForm.dispatchEvent(new Event('submit'));
+            creditsForm.dispatchEvent(new Event('submit'));
         }
     });
 
