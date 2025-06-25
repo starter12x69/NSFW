@@ -131,6 +131,37 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
+    // Read More Toggle Functionality
+    const readMoreBtn = document.getElementById('readMoreBtn');
+    const seoContent = document.getElementById('seoContent');
+    const seoCtaBtn = document.getElementById('seoCtaBtn');
+
+    if (readMoreBtn && seoContent) {
+        readMoreBtn.addEventListener('click', function() {
+            const isExpanded = seoContent.style.display !== 'none';
+            
+            if (isExpanded) {
+                // Collapse
+                seoContent.style.display = 'none';
+                readMoreBtn.classList.remove('expanded');
+                readMoreBtn.querySelector('span').textContent = 'Read More';
+            } else {
+                // Expand
+                seoContent.style.display = 'block';
+                readMoreBtn.classList.add('expanded');
+                readMoreBtn.querySelector('span').textContent = 'Read Less';
+            }
+        });
+    }
+
+    // SEO CTA Button - same functionality as main buy credits button
+    if (seoCtaBtn) {
+        seoCtaBtn.addEventListener('click', function() {
+            buyCreditsModal.style.display = 'flex';
+            emailInput.focus();
+        });
+    }
+
     // FAQ Functionality
     const faqItems = document.querySelectorAll('.faq-item');
     
